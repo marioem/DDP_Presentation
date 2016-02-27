@@ -1,0 +1,118 @@
+---
+title       : Process Analysis
+subtitle    : Shiny App at Work
+author      : Mariusz Musiał
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, error=FALSE}
+library(ggplot2)
+library(dplyr)
+
+load("assets/procdata.RData") # load the dataframe
+
+procdata <- procdata %>% filter(Process %in% c("A", "B", "C", "D"))
+procdata2 <- procdata[sample(nrow(procdata), size = 20, replace = F),]
+```
+
+## Process Analysis App
+
+### It will help you:
+
+> - to get the overview of statistical parameters</li>
+> - to transform the data</li>
+> - to select time range</li>
+> - to view the distribution and scatterplots</li>
+> - to test for means equality</li>
+> - to test for trend change over time</li>
+> * Process Analysis App just does this. It helps to analyze and compare functionally equivalent processes.
+
+--- .class #id &twocol
+
+## Analyze data in two domains
+
+*** =left
+Poulation
+
+```{r, echo=FALSE, fig.height=6}
+        ga <- ggplot(procdata, aes(x = Process, y = Performance, fill = Process))
+        ga <- ga + geom_violin()
+        ga <- ga + geom_boxplot(fill = "grey", color = "red", outlier.colour = "red",
+                                outlier.size = 3, width = .2)
+        ga <- ga + stat_summary(color = "black", fun.y=mean, geom="point", shape=21, size=4)
+        ga <- ga + ggtitle("Process Performance")
+        ga <- ga + xlab("Process type")
+            ga <- ga + ylab("Performance metric")
+        ga <- ga + theme(plot.title = element_text(size = rel(2), 
+                                                   colour = "darkblue", face = "bold"))
+        ga <- ga + theme(axis.title.y = element_text(size = rel(1.5)))
+        ga <- ga + theme(axis.title.x = element_text(size = rel(1.5)))
+        ga <- ga + theme(axis.text.x = element_text(size = rel(1.5)))
+        ga <- ga + theme(axis.text.y = element_text(size = rel(1.5)))
+        ga
+```
+
+*** =right
+Time
+
+```{r, echo=FALSE, fig.height=6}
+    g8 <- ggplot(procdata, aes(x = Date, y = Performance, color = Process))
+    g8 <- g8 + geom_point(size = 3, alpha = .6)
+    g8 <- g8 + geom_smooth(method = "lm", color = "black")
+    g8 <- g8 + facet_wrap(~Process)
+    g8 <- g8 + ggtitle("Performance trends per Process Type")
+    g8 <- g8 + xlab("Process run date")
+    g8 <- g8 + ylab("Performance metric")
+    g8 <- g8 + theme(legend.position="none")
+    g8 <- g8 + theme(axis.text.x = element_text(angle = 90))
+    g8 <- g8 + theme(plot.title = element_text(size = rel(2), 
+                                               colour = "darkblue", face = "bold"))
+    g8 <- g8 + theme(axis.title.y = element_text(size = rel(1.5)))
+    g8 <- g8 + theme(axis.title.x = element_text(size = rel(1.5)))
+    g8 <- g8 + theme(axis.text.x = element_text(size = rel(1.5)))
+    g8 <- g8 + theme(axis.text.y = element_text(size = rel(1.5)))
+
+    g8
+```
+
+--- .class #id 
+
+## Review some selected statistics in a tabular form
+
+```{r, echo=FALSE, results='asis'}
+# Hint from https://github.com/ramnathv/slidify/issues/414
+# 
+dynamic_table <- DT::datatable(procdata2[,1:4],
+                               options = list(autoWidth = FALSE,
+                                              searching = TRUE,
+                                              paging = TRUE,
+                                              info = FALSE,
+                                              pageLength = 5,
+                                              ordering = TRUE)
+                               )
+DT::saveWidget(dynamic_table, 'example.html')
+cat('<iframe src="example.html" STYLE="width:100%;height=100%"> </iframe>')
+```
+
+The table is live, check it out!
+
+--- .class #id 
+
+## Where to find the stuff?
+
+- [Process Analysis App](https://marioem.shinyapps.io/ProcessAnalysis/)
+- [App code on GitHub](https://github.com/marioem/DevelopingDataProducts/tree/master)
+- [Presentation code on GitHub]()
+
+*A simple documentation about the app is embedded in the app itself*
+
+
+
+
+
