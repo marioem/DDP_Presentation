@@ -11,19 +11,30 @@ mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
 ---
 
+<style>
+em {
+  font-style: italic
+}
+</style>
+
+<style>
+strong {
+  font-weight: bold;
+}
+</style>
+
 
 
 ## Process Analysis App
 
 ### It will help you:
 
-> - to get the overview of statistical parameters</li>
-> - to transform the data</li>
-> - to select time range</li>
-> - to view the distribution and scatterplots</li>
-> - to test for means equality</li>
-> - to test for trend change over time</li>
-> * Process Analysis App just does this. It helps to analyze and compare functionally equivalent processes.
+> - to get the overview of statistical parameters
+> - to transform the data
+> - to select time range
+> - to view the distribution and scatterplots
+> - to test for means equality
+> - to test for trend change over time
 
 --- .class #id &twocol
 
@@ -43,8 +54,7 @@ Time
 
 ## Review some selected statistics in a tabular form
 
-<iframe src="example.html" STYLE="width:100%;height=100%"> </iframe>
-
+<iframe src="example.html"> </iframe>
 The table is live, check it out!
 
 --- .class #id 
@@ -53,11 +63,6 @@ The table is live, check it out!
 
 - [Process Analysis App](https://marioem.shinyapps.io/ProcessAnalysis/)
 - [App code on GitHub](https://github.com/marioem/DevelopingDataProducts/tree/master)
-- [Presentation code on GitHub]()
+- [Presentation code on GitHub](https://github.com/marioem/DDP_Presentation)
 
 *A simple documentation about the app is embedded in the app itself*
-
-
-
-
-
